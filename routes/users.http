@@ -1,0 +1,23 @@
+GET http://localhost:5050/users
+
+############
+
+POST http://localhost:5050/users HTTP/1.1
+content-type: application/json
+
+{
+     "username": "francesco",
+    "email": "francesco@hotmail.com",
+    "password": "hello"
+}
+
+############
+
+PATCH http://localhost:5050/users/646667c29e4143c3c28d0442 HTTP/1.1
+content-type: application/json
+
+{
+     "username": "LilyB",
+    "email": "lily@hotmail.com",
+    "password": "cio"
+}
