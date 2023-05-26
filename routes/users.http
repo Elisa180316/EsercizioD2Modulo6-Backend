@@ -6,9 +6,12 @@ POST http://localhost:5050/users HTTP/1.1
 content-type: application/json
 
 {
-     "username": "francesco",
-    "email": "francesco@hotmail.com",
-    "password": "hello"
+     "firstname": "jwt",
+     "lastname": "lastnamejwt",
+      "email": "jwt@jwt.com",
+      "password": "jwt123456",
+      "age": 38
+      
 }
 
 ############

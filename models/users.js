@@ -3,11 +3,17 @@ import mongoose from 'mongoose'
 import { Schema, model } from "mongoose"
 
 const UserSchema = new mongoose.Schema ({
-    username: {
+    firstname: {
         type: String,
-        required: true,
-        max: 30
+required: true,
+max: 255
     },
+
+    lastname: {
+        type: String,
+        required: true
+    },
+
 
     email: {
         type: String,
@@ -17,9 +23,15 @@ const UserSchema = new mongoose.Schema ({
     password: {
         type: String,
         required: true
-    }
+    },
+
+    role: {
+        type: String,
+        required: false,
+        default: 0
+    },
 }, {
-    //timestamps: quando utente salva i dati immessi si aggiorna le date di creazione ed aggiornamento e strict: accetta solo i dati che abbiamo richiesto
+    //opzione timestamps: quando utente salva i dati immessi si aggiorna le date di creazione ed aggiornamento ed opzione strict: accetta solo i dati che abbiamo richiesto
     timestamps: true,
     strict: true
 })

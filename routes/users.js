@@ -2,12 +2,16 @@ import express from 'express'
 import { Router } from "express";
 import UserModel from '../models/users.js'
 import bcrypt from 'bcrypt'
+import logger from '../middleware/logger.js'
+import validateUser from '../middleware/validateUser.js';
+ import cacheMiddleware from '../middleware/cacheMiddleware.js'
+ import {verifyToken} from '../middleware/verifyToken.js'
 
 
 const router = Router()
 
 //GET
-router.get('/users', async (req, res)=>{
+router.get('/users', [logger, cacheMiddleware, verifyToken], async (req, res)=>{//Middlewares logger+validateUser+cached inseriti come  argomenti SOLO per la get//
     const {page = 1, pageSize = 3} = req.query
     try {
         const users = await UserModel.find()
@@ -33,14 +37,16 @@ router.get('/users', async (req, res)=>{
 
 
 //POST
-router.post("/users", async (req, res) => {
+router.post("/users", validateUser, async (req, res) => {
     const genSalt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, genSalt);
   
     const user = new UserModel({
-      username: req.body.username,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
       email: req.body.email,
-      password: hashPassword
+      password: hashPassword,
+      role: req.body.role
     });
   
     try {

@@ -1,12 +1,12 @@
 import express from "express";
 const router = express.Router();
 import PostModel from "../models/posts.js";
-
+import multer from 'multer'
 //GET
 
 router.get("/posts", async (req, res) => {
     //Destrutturiamo 2 query page e pagesize. page con 1 di default e pagesize per quanti vederne per pagina//
-  const { page = 1, pageSize = 8 } = req.query;
+  const { page = 1, pageSize = 14 } = req.query;
 
   try {
     const posts = await PostModel.find()
@@ -71,7 +71,7 @@ router.get("/posts/bytitle/:title", async (req, res) => {
 //POST
 
 router.post("/posts", async (req, res) => {
-  const post = new PostModel({
+  const postData = new PostModel({
     title: req.body.title,
     content: req.body.content,
     author: req.body.author,
@@ -79,7 +79,7 @@ router.post("/posts", async (req, res) => {
   });
 
   try {
-    await post.save();
+    await postData.save();
     res.status(201).send({
       statusCode: 201,
       message: "Post salvato con successo nel DB",

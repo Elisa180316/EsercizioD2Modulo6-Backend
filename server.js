@@ -11,7 +11,7 @@ const PORT = 5050;
 
 const app = express();
 
-//middleware
+//middleware globali(vengono utilizzati per tutte le rotte)
 app.use(express.json());
 app.use(cors());//abilita il server a ricevere richieste da qualsiasi origine
 
