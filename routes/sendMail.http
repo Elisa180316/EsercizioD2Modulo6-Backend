@@ -1,0 +1,7 @@
+POST http://localhost:5050/sendMail HTTP/1.1
+content-type: application/json
+
+{
+    "subject": "Hello from NodeMailer",
+    "message":"This is my first email from NodeMailer"
+}
