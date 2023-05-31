@@ -31,11 +31,11 @@ const internalStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     //Creo id unico data oggi+ str univoca per i file salvati//
-    const uniqueSuffix = Data.now() + "-" + Math.round(Math.random() + 1e9);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() + 1e9);
     //Recupero estensione del file sottoforma di str//
     const fileExt = file.originalname.split(".").pop();
     //Lanciamo callback con nome file-stringa univoca.estensione file//
-    cb(null, `${file.fieldname}-${uniqueSuffix}.&${fileExt}`);
+    cb(null, `${file.fieldname}-${uniqueSuffix}.${fileExt}`);
   },
 });
 //Imposto configurazione multer con storage//
@@ -163,6 +163,7 @@ router.get("/posts/bytitle/:title", async (req, res) => {
 
 router.post("/posts", async (req, res) => {
   const postData = new PostModel({
+    img: req.body.img,
     title: req.body.title,
     content: req.body.content,
     author: req.body.author,

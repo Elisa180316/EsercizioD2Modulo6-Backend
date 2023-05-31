@@ -4,8 +4,7 @@ import mongoose from 'mongoose'
 const PostSchema = new mongoose.Schema ( {
     img: {
         type: String,
-        required: false,
-        default: "https://picsum.photos/1920/1080"
+        required: false
     },
 
     title: {

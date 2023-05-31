@@ -21,17 +21,15 @@ router.post("/login", async (req, res) => {
   }
 
   //Token da inviare al frontend//
-  //genero cpn algoritmo token con primo argomento email per renderlo univoco ed il set di caratteri//
+  //genero con algoritmo token con primo argomento email per renderlo univoco ed il set di caratteri//
   const token = jwt.sign({ 
     email: user.email,
     firstname: user.firstname,
     lastname: user.lastname,
     role: user.role,
     age: user.age
-   }, process.env.SECRET_JWT_KEY, {
-    //Scade in 24 ore//  
-     expiresIn: '24h' 
-   });
+   }, process.env.SECRET_JWT_KEY, 
+   );
    //restituisce in header l'autorizzazione con il token e lo statuscode//
    res.header('auth', token).status(200).send({
     message:'Login effettuato con successo',
@@ -47,3 +45,8 @@ router.post("/login", async (req, res) => {
 });
 
 export default router;
+
+// {
+//   //Scade in 24 ore//  
+//    expiresIn: '24h' 
+//  }
