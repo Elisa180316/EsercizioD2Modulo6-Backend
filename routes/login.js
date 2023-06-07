@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { Router } from "express";
 import UserModel from "../models/users.js";
 import express from "express";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -22,21 +22,28 @@ router.post("/login", async (req, res) => {
 
   //Token da inviare al frontend//
   //genero con algoritmo token con primo argomento email per renderlo univoco ed il set di caratteri//
-  const token = jwt.sign({ 
-    email: user.email,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    role: user.role,
-    age: user.age
-   }, process.env.SECRET_JWT_KEY, 
-   );
-   //restituisce in header l'autorizzazione con il token e lo statuscode//
-   res.header('auth', token).status(200).send({
-    message:'Login effettuato con successo',
-     statusCode: 200,
-     token
-   })
-  
+  const token = jwt.sign(
+    {
+      email: user.email,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      role: user.role,
+      age: user.age,
+      id: user._id,
+    },
+    process.env.SECRET_JWT_KEY,
+    {
+      //Scade in 24 ore//
+      expiresIn: "24h",
+    }
+  );
+  //restituisce in header l'autorizzazione con il token e lo statuscode//
+  res.header("auth", token).status(200).send({
+    message: "Login effettuato con successo",
+    statusCode: 200,
+    token,
+  });
+
   // return res.status(200).send({
   //   message: "Login effettuato con successo",
   //   statusCode: 200,
@@ -45,8 +52,3 @@ router.post("/login", async (req, res) => {
 });
 
 export default router;
-
-// {
-//   //Scade in 24 ore//  
-//    expiresIn: '24h' 
-//  }

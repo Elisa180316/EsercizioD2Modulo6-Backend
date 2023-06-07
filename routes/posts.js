@@ -1,28 +1,30 @@
 import express from "express";
 const router = express.Router();
 import PostModel from "../models/posts.js";
+import UserModel from '../models/users.js'
+
 import multer from "multer"; //Importo multer
-import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
+// import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 //Limite bytes caricamento file 
 const MAX_FILE_SIXE = 20000000
 
 // Configuration Cloudinary per accedere ad Api//
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
 
-const cloudStorage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "epibooksImages",
-    format: async (req, file) => "png",
-    public_id: (req, file) => file.name,
-  },
-});
+// const cloudStorage = new CloudinaryStorage({
+//   cloudinary: cloudinary,
+//   params: {
+//     folder: "epibooksImages",
+//     format: async (req, file) => "png",
+//     public_id: (req, file) => file.name,
+//   },
+// });
 
 //Consente di salvare in destinazione cartella upload
 const internalStorage = multer.diskStorage({
@@ -51,22 +53,22 @@ const internalUpload = multer({
   // }
 });
 
-const cloudUpload = multer({ storage: cloudStorage });
-//Endpoint per upload in cloudinary//
-router.post(
-  "/posts/cloudUpload",
-  cloudUpload.single("img"),
-  async (req, res) => {
-    try {
-      res.status(200).json({ img: req.file.path });
-    } catch (error) {
-      res.status(500).send({
-        message: "Errore durante la fase di upload",
-        statusCode: 500,
-      });
-    }
-  }
-);
+// const cloudUpload = multer({ storage: cloudStorage });
+// //Endpoint per upload in cloudinary//
+// router.post(
+//   "/posts/cloudUpload",
+//   cloudUpload.single("img"),
+//   async (req, res) => {
+//     try {
+//       res.status(200).json({ img: req.file.path });
+//     } catch (error) {
+//       res.status(500).send({
+//         message: "Errore durante la fase di upload",
+//         statusCode: 500,
+//       });
+//     }
+//   }
+// );
 
 //Rotta endpoint per caricamento file (img: nome  dato all'input frontend)//
 
@@ -101,6 +103,7 @@ router.get("/posts", async (req, res) => {
 
   try {
     const posts = await PostModel.find()
+    .populate('author', 'username email role')//Ref populate con stringa author//
       //Concateno limit (limito 8 risultati alla pagesize)
       .limit(pageSize)
       //concateno skip parti da ultima pag e mi mostri gli 8 successivi risultati//
@@ -162,6 +165,12 @@ router.get("/posts/bytitle/:title", async (req, res) => {
 //POST
 
 router.post("/posts", async (req, res) => {
+  
+  const user = await 
+  
+  UserModel.findOne({_id: req.body.author})
+
+ 
   const postData = new PostModel({
     img: req.body.img,
     title: req.body.title,
@@ -171,7 +180,8 @@ router.post("/posts", async (req, res) => {
   });
 
   try {
-    await postData.save();
+    await postData.save()
+    await UserModel.updateOne({_id:user._id}, {$push:{posts:postData}});
     res.status(201).send({
       statusCode: 201,
       message: "Post salvato con successo nel DB",

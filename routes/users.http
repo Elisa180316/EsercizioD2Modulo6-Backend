@@ -1,4 +1,4 @@
-GET http://localhost:5050/users
+GET http://localhost:5050/users 
 
 ############
 
@@ -6,21 +6,22 @@ POST http://localhost:5050/users HTTP/1.1
 content-type: application/json
 
 {
-     "firstname": "jwt",
-     "lastname": "lastnamejwt",
-      "email": "jwt@jwt.com",
-      "password": "jwt123456",
-      "age": 38
-      
-}
+     "firstname": "user6",
+     "lastname": "user6",
+     "username":"user6",
+      "email": "user6@yahoo.it",
+      "password": "user6abcde",
+      "age": 38,
+      "role":"user"
+     }
 
 ############
 
-PATCH http://localhost:5050/users/646667c29e4143c3c28d0442 HTTP/1.1
+PATCH http://localhost:5050/users/646f34aa85362d85e147a9e7 HTTP/1.1
 content-type: application/json
 
 {
-     "username": "LilyB",
-    "email": "lily@hotmail.com",
-    "password": "cio"
+   
+    "email": "jwt@jwt.com",
+    "password": "jwt123456"
 }
