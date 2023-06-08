@@ -166,9 +166,7 @@ router.get("/posts/bytitle/:title", async (req, res) => {
 
 router.post("/posts", async (req, res) => {
   
-  const user = await 
-  
-  UserModel.findOne({_id: req.body.author})
+  const user = await  UserModel.findOne({_id:req.body.author})
 
  
   const postData = new PostModel({
@@ -179,9 +177,10 @@ router.post("/posts", async (req, res) => {
     rate: req.body.rate,
   });
 
+    
   try {
-    await postData.save()
-    await UserModel.updateOne({_id:user._id}, {$push:{posts:postData}});
+    const newPost = await postData.save()
+    await UserModel.updateOne( {$push:{posts:newPost}});
     res.status(201).send({
       statusCode: 201,
       message: "Post salvato con successo nel DB",

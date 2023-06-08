@@ -8,6 +8,7 @@ import sendMailRoute from './routes/sendEmail.js'
 import dotenv from 'dotenv'
 import path from 'path'
 import { __dirname, __filename } from './esm.js';
+import gitHubOauthRoute from './routes/gitHubOauth.js'
 
 
 //Richiamo dotenv//
@@ -30,6 +31,7 @@ app.use('/', usersRoute)
 app.use('/', loginRoute)
 app.use('/', postsRoute)
 app.use ('/', sendMailRoute)
+app.use('/', gitHubOauthRoute)
 
 
 mongoose.connect(process.env.DB_URL,{

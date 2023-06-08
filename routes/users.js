@@ -47,7 +47,7 @@ router.post("/users", validateUser, async (req, res) => {
     password: hashPassword,
     age: req.body.age,
   });
-console.log(req.body.email, req.body.username)
+  console.log(req.body.email, req.body.username);
   try {
     const userExists = await UserModel.findOne({
       $or: [{ email: req.body.email }, { username: req.body.username }],
