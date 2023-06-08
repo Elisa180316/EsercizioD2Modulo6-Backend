@@ -173,14 +173,14 @@ router.post("/posts", async (req, res) => {
     img: req.body.img,
     title: req.body.title,
     content: req.body.content,
-    author: req.body.author,
+    author: user._id,
     rate: req.body.rate,
   });
 
     
   try {
     const newPost = await postData.save()
-    await UserModel.updateOne( {$push:{posts:newPost}});
+    await UserModel.updateOne({_id:user._id}, {$push:{posts:newPost}});
     res.status(201).send({
       statusCode: 201,
       message: "Post salvato con successo nel DB",
