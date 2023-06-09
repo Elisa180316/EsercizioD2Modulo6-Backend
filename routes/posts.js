@@ -107,7 +107,8 @@ router.get("/posts", async (req, res) => {
       //Concateno limit (limito 8 risultati alla pagesize)
       .limit(pageSize)
       //concateno skip parti da ultima pag e mi mostri gli 8 successivi risultati//
-      .skip((page - 1) * pageSize);
+      .skip((page - 1) * pageSize)
+      
 
     //Calcolo il totale dei posts della collection//
 

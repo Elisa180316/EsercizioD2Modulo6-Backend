@@ -6,11 +6,11 @@ POST http://localhost:5050/users HTTP/1.1
 content-type: application/json
 
 {
-     "firstname": "user6",
-     "lastname": "user6",
-     "username":"user6",
-      "email": "user6@yahoo.it",
-      "password": "user6abcde",
+     "firstname": "user1",
+     "lastname": "user1",
+     "username":"user1",
+      "email": "user1@yahoo.it",
+      "password": "user1abcde",
       "age": 38,
       "role":"user"
      }

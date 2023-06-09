@@ -1,6 +1,5 @@
 import express from "express";
 // import GitHubStrategy from "passport-github2";
-// import {Strategy as GithubStrategy} from 'passport-github2'
 import { Strategy as GitHubStrategy } from "passport-github2"
 import passport from "passport";
 import session from "express-session";
@@ -67,10 +66,11 @@ router.get('/success', (req, res) => {
    if (req.user) {
     const username = req.user.username;
     res.send (`Welcome back, ${username}!`)
+   
    } else {
     res.send('Please login first.');
    }
-  res.redirect('http://localhost:3000/home');
+ res.redirect('http://localhost:3000/home');
 });
 
 export default router;
