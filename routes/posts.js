@@ -178,7 +178,7 @@ router.post("/posts", async (req, res) => {
     rate: req.body.rate,
   });
 
-    
+ 
   try {
     const newPost = await postData.save()
     await UserModel.updateOne({_id:user._id}, {$push:{posts:newPost}});

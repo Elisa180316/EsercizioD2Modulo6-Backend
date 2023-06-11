@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { __dirname, __filename } from './esm.js';
 import gitHubOauthRoute from './routes/gitHubOauth.js';
+import googleAuthRoute from './routes/googleAuth.js'
 
 // Richiamo dotenv
 dotenv.config();
@@ -30,6 +31,7 @@ app.use('/', loginRoute);
 app.use('/', postsRoute);
 app.use('/', sendMailRoute);
 app.use('/', gitHubOauthRoute); 
+app.use('/', googleAuthRoute)
 
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
