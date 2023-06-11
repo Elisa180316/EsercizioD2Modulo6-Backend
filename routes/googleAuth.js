@@ -2,11 +2,11 @@ import express from 'express'
 
 const router = express.Router()
 
-import Authenticator from 'passport'
+
 import dotenv from 'dotenv'
 import passport from 'passport'
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import session from 'express-session'
+import {Strategy as GoogleStrategy } from 'passport-google-oauth20'
+
 
 dotenv.config()
 

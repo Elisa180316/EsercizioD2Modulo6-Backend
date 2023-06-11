@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node":">=14.20.1"
+    "node": ">=14.20.1"
   },
   "type": "module",
   "scripts": {
@@ -29,6 +29,7 @@
     "nodemailer": "^6.9.3",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
     "prettier": "^2.8.8",
     "react-bootstrap": "^2.7.4",
     "react-paginate": "^8.2.0",
