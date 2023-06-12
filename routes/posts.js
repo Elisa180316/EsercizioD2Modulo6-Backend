@@ -170,29 +170,32 @@ router.post("/posts", async (req, res) => {
   const user = await  UserModel.findOne({_id:req.body.author})
 
  
-  const postData = new PostModel({
-    img: req.body.img,
-    title: req.body.title,
-    content: req.body.content,
-    author: user._id,
-    rate: req.body.rate,
-  });
+  const newPost = new PostModel({
+      title: req.body.title,
+      content: req.body.content,
+      author: user._id,
+      img: req.body.img,
+      rate: req.body.rate,
+    })
 
  
   try {
-    const newPost = await postData.save()
-    await UserModel.updateOne({_id:user._id}, {$push:{posts:newPost}});
-    res.status(201).send({
-      statusCode: 201,
-      message: "Post salvato con successo nel DB",
-    });
-  } catch (error) {
-    res.status(500).send({
-      statusCode: 500,
-      message: "Errore interno del server",
-    });
-  }
-});
+      const post = await newPost.save()
+      await UserModel.updateOne({ _id: user._id }, { $push: { posts: post } })
+      res.status(200)
+          .send({
+            message: 'Post salvato correttamente',
+            statusCode: 200,
+            post
+          })
+    } catch(error) {
+      res.status(500)
+          .send({
+            message: 'Errore interno del server',
+            statusCode: 500
+          })
+    }
+  })
 
 //PATCH
 
